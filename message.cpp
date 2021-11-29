@@ -24,7 +24,8 @@ Message::Message(char *marshalled_base64, size_t marshalled_base64_size)
     int in_ = 0;
     unsigned char sixtets[4], octets[3];
     size_t s2 = (s / 4) * 3;
-    char *ret = new char[s2];
+    char *ret = new char[s2 + 1];
+    for (int l = 0; l < s2 + 1; l++) ret[l] = 0;
 
     while (s-- && (marshalled_base64[in_] != '=') && is_base64(marshalled_base64[in_]))
     {
@@ -76,8 +77,9 @@ char *Message::marshal()
     size_t s = message_size;
     char *m = (char *)message;
     size_t s2 = (s / 3) * 4;
-    s2 = (s % 3) ? s2 + 1 : s2;
-    char *ret = new char[s2];
+    s2 = (s % 3) ? s2 + 4 : s2;
+    char *ret = new char[s2 + 1];
+    for (int l = 0; l < s2 + 1; l++) ret[l] = 0;
 
     while (s--)
     {

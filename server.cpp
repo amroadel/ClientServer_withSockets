@@ -1,25 +1,18 @@
 #include "server.h"
 #include "message.h"
+#include <string.h>
 server::server(char * _listen_hostname, int _listen_port) {
     udpServerSocket = new UDPServerSocket;
     if(!udpServerSocket->initialize(_listen_port)) {
         exit(EXIT_FAILURE); 
     }
-
 }
 
 server::~server(){
     delete udpServerSocket;
 }
 void server::serveRequest() {
-    char *e; 
     while (true) {
-
-        fgets(e, 1, stdin);
-        if (strcmp(e, "q") != 0) {
-            break; 
-        }
-
         if (udpServerSocket->readFromSocket(buffer, BUFSIZE) < 0) {
             perror("Error receiving from client\n"); 
             exit(EXIT_FAILURE);
@@ -35,6 +28,9 @@ void server::serveRequest() {
             exit(EXIT_FAILURE);
         }
         
+        if (!strcmp(buffer2, "q"))
+            break;
+
     }
     printf("Closing Server ...\n");   
 }
