@@ -1,8 +1,17 @@
 #include "UDPsocket.h"
 
 UDPSocket::UDPSocket() {
+    sock = 0;
+    myPort = 0;
+    peerPort = 0;
+    myAddr = {0};
+    peerAddr = {0};
     hostName = new char[256]; 
-    gethostname(hostName, sizeof(hostName));
+    // gethostname(hostName, sizeof(hostName));
+}
+
+UDPSocket::~UDPSocket () {
+    delete [] hostName;
 }
 bool UDPSocket::initialize (char * _myAddr, int _myPort) {
     return false;

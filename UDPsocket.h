@@ -16,11 +16,8 @@ protected:
     int sock;
     sockaddr_in myAddr;
     sockaddr_in peerAddr;
-    char * myAddress;
-    char * peerAddress;
     int myPort;
     int peerPort;
-    bool enabled;
     char *hostName;
 public: 
     UDPSocket ();

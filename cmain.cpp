@@ -3,18 +3,14 @@
 
 int main(int argc, char **argv) {
 
-    char *hostname;
-    int port; 
-
     if (argc != 3) {
        fprintf(stderr,"usage: %s <hostname> <port>\n", argv[0]);
-       exit(0);
+       exit(EXIT_FAILURE);
     }
 
-    hostname = argv[1];
-    port = atoi(argv[2]);
+    char *hostname = argv[1];
+    int port = atoi(argv[2]);
 
-    int port; 
     client c1(hostname, port); 
     c1.execute();
     return 0;

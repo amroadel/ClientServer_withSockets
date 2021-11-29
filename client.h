@@ -10,7 +10,6 @@ class client
     public:
         client(char * _hostname, int _port);
         void execute(); 
-        // Message * execute(Message * _message);
         ~client();
 };
 #endif // CLIENT_H

@@ -8,8 +8,9 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    int port; 
-    server s1("xyz", port); 
+    char hostname[] = "localhost";
+    int port = atoi(argv[1]);
+    server s1(hostname, 8888); 
     s1.serveRequest();
     return 0;
 }

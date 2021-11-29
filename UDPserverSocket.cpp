@@ -1,12 +1,20 @@
 #include "UDPserverSocket.h"
 
 UDPServerSocket::UDPServerSocket() {
-    hostName = new char[256]; 
+    sock = 0;
+    myPort = 0;
+    peerPort = 0;
+    myAddr = {0};
+    peerAddr = {0};
+    hostName = new char[256];
+}
+
+UDPServerSocket::~UDPServerSocket() {
+    delete [] hostName;
 }
 
 bool UDPServerSocket::initialize(int _myPort) {
     myPort = _myPort; 
-
     /* socket: create the parent socket */
     sock = socket(AF_INET, SOCK_DGRAM, 0); 
     if (sock < 0) {
@@ -18,6 +26,7 @@ bool UDPServerSocket::initialize(int _myPort) {
     int optval = 1;
     setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, 
 	        (const void *)&optval , sizeof(int));
+    
     
     /* Set the server's Internet address */
     bzero(&myAddr, sizeof(myAddr));
@@ -33,6 +42,11 @@ bool UDPServerSocket::initialize(int _myPort) {
 
     return true;
 
+}
+
+int UDPServerSocket::writeToSocket (char * buffer, int maxBytes) {
+    return sendto(sock, buffer, maxBytes, 0, 
+	        (struct sockaddr *) &peerAddr, sizeof(peerAddr));
 }
 
 int UDPServerSocket::readFromSocket (char * buffer, int maxBytes) {
