@@ -69,7 +69,7 @@ int UDPServerSocket::readFromSocket (char * buffer, int maxBytes) {
 
     printf("server received datagram from %s (%s)\n", 
 	   hostp->h_name, hostaddrp);
-    printf("server received %d/%d bytes: %s\n", strlen(buffer), n, buffer);
+    // printf("server received %d/%d bytes: %s\n", strlen(buffer), n, buffer);
 
     return n; 
 }

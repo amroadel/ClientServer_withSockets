@@ -1,5 +1,5 @@
 #include "client.h"
-
+#include "message.h"
 client::client(char * _hostname, int _port) {
     udpSocket = new UDPClientSocket; 
     if(!udpSocket->initialize(_hostname, _port)) {
@@ -16,7 +16,9 @@ void client::execute() {
     printf("Please enter msg: ");
     fgets(buffer, BUFSIZE, stdin);
 
-    if (udpSocket->writeToSocket(buffer, BUFSIZE) < 0) {
+    Message m1(0, buffer, strlen(buffer) - 1, 0);
+
+    if (udpSocket->writeToSocket(m1.marshal(), BUFSIZE) < 0) {
         perror("Error sending from client\n"); 
         exit(EXIT_FAILURE);
     }
@@ -25,5 +27,8 @@ void client::execute() {
         perror("Error receiving from server\n"); 
         exit(EXIT_FAILURE);
     }
-    printf("Echo from server: %s", buffer);
+    
+    Message m2(buffer, strlen(buffer));
+    char *buffer2 = (char*)m2.getMessage();
+    printf("Echo from server: %s", buffer2);
 }
